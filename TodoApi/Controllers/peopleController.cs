@@ -103,10 +103,12 @@ namespace Todoapi.Controllers
         public async Task<ActionResult<people>> Postpeople(people people)
         {
             people.activeTaskCount=0;
-            var counter = 0;
-            if (_context.peoples.Any())
+            // We chose not to generate automatic keys to support requests that require
+            // Id, because the generated keys are a long string keys and not a small integer keys.
+            var counter = 0;  
+            if (_context.peoples.Any()) 
                 counter = Int32.Parse(_context.peoples.Max(x=>x.Id)) + 1;
-            people.Id = counter.ToString();
+            people.Id = counter.ToString(); 
             _context.peoples.Add(people);
             if (peopleEmailExists(people.email)){
                 return BadRequest("A person with email '"+people.email+"' already exists.");
@@ -132,6 +134,8 @@ namespace Todoapi.Controllers
             if (task.status == null)
                 task.status = state.active;
             task.ownerId = id;
+            // We chose not to generate automatic keys to support requests that require
+            // Id, because the generated keys are a long string keys and not a small integer keys.
             var counter = 0;
             if (_context.tasks.Any())
                 counter = Int32.Parse(_context.tasks.Max(x=>x.Id)) + 1;

@@ -7,14 +7,13 @@ public enum state{
     active,done,na
 }
 
-
 namespace Todoapi.Models
 {
     /* Task model
     */
     public class task{
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string Id {get; set;}
+        public string Id {get; set;}
         
         [Required(ErrorMessage ="Title is required")]
         public string title {get; set;}
@@ -29,7 +28,10 @@ namespace Todoapi.Models
         public state? status {get; set;
         }
 
+        
         public string ownerId {get; set;}
+
+        
         
     }
 }

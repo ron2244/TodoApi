@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 namespace Todoapi.Models
 {
     public class people{
@@ -11,8 +12,11 @@ namespace Todoapi.Models
         public string favoriteProgrammingLanguage {get; set;}
 
         public int? activeTaskCount {get; set;}
-        //The database generates unique ID 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string Id {get; set;}
+        
+        public string Id {get; set;}
+
+        
+
         
     }
 }
