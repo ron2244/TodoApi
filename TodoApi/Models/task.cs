@@ -28,10 +28,11 @@ namespace Todoapi.Models
         public state? status {get; set;
         }
 
-        
+        [Display(Name = "people")]
         public string ownerId {get; set;}
 
-        
+        [ForeignKey("ownerId")]  
+        protected people peoples { get; set; }
         
     }
 }

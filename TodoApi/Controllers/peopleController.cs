@@ -141,22 +141,22 @@ namespace Todoapi.Controllers
                 counter = Int32.Parse(_context.tasks.Max(x=>x.Id)) + 1;
             task.Id = counter.ToString();
             _context.tasks.Add(task);
-            if (!peopleExists(id))
-            {
-                return NotFound("A person with the id '"+id+"' does not exist.");
-            }
-            if (task.status == state.active){ //If the task status is active, update the owner's task count
-                people people =  await _context.peoples.FindAsync(id);
-                people.activeTaskCount = people.activeTaskCount+1;
-            } 
+    
             try
             {
+                if (task.status == state.active){ //If the task status is active, update the owner's task count
+                    people people =  await _context.peoples.FindAsync(id);
+                    people.activeTaskCount = people.activeTaskCount+1;
+                } 
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch (Exception)
             {
-          
-                    throw;
+                if (!peopleExists(id))
+                    {
+                        return NotFound("A person with the id '"+id+"' does not exist.");
+                    }
+                throw;
             
             }
 
@@ -180,7 +180,7 @@ namespace Todoapi.Controllers
             }
 
             _context.peoples.Remove(people);
-            //Delete all the tasks related to the deleted person
+            //Delete all the tasks related to the deleted person -.NET doesn't suppor cascade delete with the foreign key
             foreach (task t in _context.tasks){
                 if (t.ownerId == id)
                     _context.tasks.Remove(t);
